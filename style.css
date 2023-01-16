@@ -1,3 +1,37 @@
 *{
     font-family: monospace;
 }
+
+body{
+    background-color: lightblue;
+}
+
+section{
+    border-top: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.form__label{
+    font-size: 16px;
+}
+
+.form__input{
+    display: block;
+    margin: 0 0 10px 0;
+}
+
+.form__button{
+    margin: 10px 0 0 0;
+}
+
+.section__table, .section__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lista__table{
+    width: 80%;
+    text-align: center;
+    background-color: lightgray;
+}

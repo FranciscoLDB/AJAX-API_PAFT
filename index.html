@@ -12,8 +12,46 @@
     <header>
         <h1>Lista de compras</h1>
     </header>
-    <section>
+    <section class="section__form">
         <h2>Adicionar produto:</h2>
-    </section>    
+        <form>
+            <label for="nomeProduto" class="form__label">Nome</label>
+            <input type="text" id="nomeProduto" name="nomeProduto" class="form__input">
+            <label for="quantidadeProduto" class="form__label">Quantidade</label>
+            <input type="number" id="quantidadeProduto" name="quantidadeProduto" class="form__input">
+            <label for="tipoProduto" class="form__label">Tipo</label>
+            <select>
+                <option value="unitario">Unitario</option>
+                <option value="peso">Peso</option>
+            </select>
+            <br>
+            <button class="form__button">Adicionar produto</button>
+        </form>
+    </section>
+    <section class="section__table">
+        <h2>Produtos adicionados:</h2>
+        <table class="lista__table">
+            <thead class="lista__table__thead">
+                <tr>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody class="lista__table__tbody">
+                <tr>
+                    <td>Coxinha</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>Refri</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>Chocolate</td>
+                    <td>6</td>
+                </tr>
+            </tbody>
+        </table>
+    </section> 
 </body>
 </html>
