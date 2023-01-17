@@ -8,7 +8,7 @@ body{
 
 section{
     border-top: 1px solid black;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
 }
 
 .form__label{
@@ -16,12 +16,12 @@ section{
 }
 
 .form__input{
-    display: block;
     margin: 0 0 10px 0;
 }
 
 .form__button{
     margin: 10px 0 0 0;
+    align-self: center;
 }
 
 .section__table, .section__form{
@@ -31,7 +31,26 @@ section{
 }
 
 .lista__table{
-    width: 80%;
+    width: 60%;
     text-align: center;
-    background-color: lightgray;
+    border-spacing: 0;
+    border: 2px #252525 solid;
+}
+
+.lista__table__thead{
+    background-color: rgb(189, 33, 33);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.lista__table__tbody{
+    background-color: rgb(238, 182, 144);
+    color: white;
+    font-size: 14px;
+}
+
+.icon{
+    height: 16px;
+    width: auto;
 }
