@@ -1,5 +1,7 @@
-function load(){
-    let inputText = document.getElementById("usuario_input");
+let inputText = document.getElementById("usuario_input");
+inputText.addEventListener('keyup', load);
+
+function load(){    
     let nomeUsuario = inputText.value;
 
     var xhttp = new XMLHttpRequest();
