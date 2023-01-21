@@ -1,0 +1,5 @@
+python --version
+python -m pip --version
+python -m pip install --user virtualenv
+python -m pip install flask
+python app.py
