@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividades aula 05</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <section>
+        <h1>Exercício 1</h1>
+        <label for="data_inicio">Data inicio:</label>
+        <input type="date" name="data_inicio" class="data__inicio" id="data_inicio">
+        <br>
+        <label for="data_fim">Data fim:</label>
+        <input type="date" name="data_fim" class="data__fim" id="data_fim">
+        <br>
+        <button onclick="loadDatas()">Calcular diferenças</button>
+        <p><b>A diferença de dias entre as datas:</b> <span id="dif_dias"></span></p>
+        <p><b>A diferença de semana entre as datas:</b> <span id="dif_sem"></span></p>
+        <p><b>A diferença de messes entre as datas:</b> <span id="dif_mes"></span></p>
+    </section>
+</body>
+</html>
