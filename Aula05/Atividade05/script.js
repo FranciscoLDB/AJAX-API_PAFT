@@ -27,3 +27,14 @@ function loadNumeros(){
             console.log(data);
         });
 }
+
+function loadMimimi(){
+    let input = document.getElementById('input_texto');
+    
+    fetch(`http://127.0.0.1:5000/mimimi/${input.value}`)
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('res_mimimi').innerText = data.mimimi;
+            console.log(data);
+        });
+}

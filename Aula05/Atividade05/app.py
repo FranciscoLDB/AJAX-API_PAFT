@@ -36,15 +36,27 @@ def numeros(numeros):
     arrayC = array.copy();
     array.reverse();
     arrayR = array.copy();
-    arrayP = []
+    arrayP = [];
     for i in array:
         if(i%2 == 0):
-            arrayP.append(i)    
+            arrayP.append(i);  
     res = {
         "ordemCrescente": arrayC,
         "ordemDecrescente": arrayR,
         "numerosPares": arrayP
     }
     return res
+
+@app.route('/mimimi/<texto>')
+def mimimi(texto):
+    texto.lower();
+    res = texto;
+    vogais = ["a", "A", "e", "E", "o", "O", "u", "U", "I"];
+    for vogal in vogais:
+        res = res.replace(vogal, "i");
+    res = {
+        "mimimi": res
+    }
+    return res;
 
 app.run(debug=True)
