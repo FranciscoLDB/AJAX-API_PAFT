@@ -3,6 +3,7 @@ from flask import request
 from flask import Response
 from datetime import datetime
 import json 
+import re
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -24,6 +25,25 @@ def difDias(diai, diaf):
         "diferencaDias": quantidade_dias,
         "diferencaSemanas": quantidade_semanas,
         "diferencaMeses": quantidade_meses
+    }
+    return res
+
+@app.route('/numeros/<numeros>')
+def numeros(numeros):
+    temp = re.findall(r'\d+', numeros)
+    array = list(map(int, temp))
+    array.sort()
+    arrayC = array.copy();
+    array.reverse();
+    arrayR = array.copy();
+    arrayP = []
+    for i in array:
+        if(i%2 == 0):
+            arrayP.append(i)    
+    res = {
+        "ordemCrescente": arrayC,
+        "ordemDecrescente": arrayR,
+        "numerosPares": arrayP
     }
     return res
 
