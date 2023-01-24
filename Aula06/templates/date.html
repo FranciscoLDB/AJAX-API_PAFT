@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Calculator</title>
+    <script>
+        function loadDatas(){
+            let url = "http://127.0.0.1:5000/date_service"
+            const data = {
+                "start_date": document.getElementById('data_inicio').value,
+                "end_date":document.getElementById('data_fim').value
+            }
+            fetch(url,{
+                method:"POST",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(json =>{
+                    console.log(json)
+                    document.getElementById('dif_dias').innerText = json.days;
+                    document.getElementById('dif_sem').innerText = json.weeks;
+                    document.getElementById('dif_mes').innerText = json.months;
+                })
+                .catch(error => console.error(error))
+        }
+    </script>
+</head>
+<body>
+    <section>
+        <h1>Exercício 1</h1>
+        <label for="data_inicio">Data inicio:</label>
+        <input type="date" name="data_inicio" class="data__inicio" id="data_inicio">
+        <br>
+        <label for="data_fim">Data fim:</label>
+        <input type="date" name="data_fim" class="data__fim" id="data_fim">
+        <br>
+        <button onclick="loadDatas()">Calcular diferenças</button>
+        <h4>A diferença entre:</h4>
+        <p><b>Dias:</b> <span id="dif_dias"></span></p>
+        <p><b>Semana:</b> <span id="dif_sem"></span></p>
+        <p><b>Messes:</b> <span id="dif_mes"></span></p>
+    </section>
+</body>
+</html>
+

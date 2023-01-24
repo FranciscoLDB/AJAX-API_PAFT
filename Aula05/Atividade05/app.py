@@ -1,6 +1,4 @@
-from flask import Flask
-from flask import request
-from flask import Response
+from flask import Flask, request, Response
 from datetime import datetime
 import json 
 import re
@@ -27,6 +25,25 @@ def difDias(diai, diaf):
         "diferencaMeses": quantidade_meses
     }
     return res
+
+def calculate_dif_dates(diai, diaf):
+    days = abs(diaf-diai).days
+    weeks = int(days/7)
+    months = 12 * (diaf.year - diai.year) + abs(diaf.month - diai.month)
+    return {
+        "diferencaDias": days,
+        "diferencaSemanas": weeks,
+        "diferencaMeses": months
+    }
+
+@app.route('/data', methods=['GET'])
+def difDias2():
+    if 'diai' in request.args and 'diaf' in request.args:
+        diai = datetime.strptime(str(request.args.get('diai')), '%Y-%m-%d')
+        diaf = datetime.strptime(str(request.args.get('diaf')), '%Y-%m-%d')
+        return calculate_dif_dates(diai, diaf)
+
+    return Response("<h1>400-BAD REQUEST - Input error </h1>", status = 400)
 
 @app.route('/numeros/<numeros>')
 def numeros(numeros):
