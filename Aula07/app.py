@@ -15,7 +15,7 @@ def get_contacts():
     data = json.load(arq)
     contacts = data['contacts']
     arq.close()
-    return {"contacts": contacts}
+    return jsonify({"contacts": contacts}), 200
 
 # GET request to retrieve one contacts
 @app.route('/contacts/<int:id>', methods=['get'])
@@ -37,24 +37,21 @@ def write_json(new_data, filename='contacts.json'):
 @app.route('/contacts', methods=['POST'])
 def add_contact():
     #id is created here 
-    if request.is_json and 'name' in request.json and 'phone' in request.json:
-        id = contacts[-1]['id'] + 1
-        contactNew = {
-            'id': id,
-            'name': request.json['name'],
-            'phone': request.json['phone']
-        }
-        for contact in contacts:
-            if contactNew['name'] == contact['name']:
-                return Response("400-BAD REQUEST - Usuario já cadastrado", status = 400)
-        
-        write_json(contactNew)
+    if request.is_json:
+        return jsonify({'message': 'body is not a json'}), 415
 
-        contacts.append(contactNew)
+    data = request.get_json()
+    if not all(key in data for key in('name', 'phone')):
+        return jsonify({'message': 'bad request'}), 400
 
-        return {'contact': contactNew}
-
-    return Response("400-BAD REQUEST - Error on input",status = 400)
+    contactNew = {
+        'id': contacts[-1]['id'] + 1,
+        'name': data['name'],
+        'phone': data['phone']
+    }
+    write_json(contactNew)
+    contacts.append(contactNew)
+    return jsonify({'contact': contactNew}), 201
 
 def upload_json(index, data):
     filename = 'contacts.json'
