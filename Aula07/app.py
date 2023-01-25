@@ -64,7 +64,12 @@ def update_contact(id):
 # DELETE request to delete a contact
 @app.route('/contacts/<int:id>', methods=['DELETE'])
 def delete_contact(id):
-    return {'message': ''}
+    for i in range(len(contacts)):
+        if contacts[i]['id'] == id:
+            del contacts[i]
+            return {'message': 'Usuario removido com sucesso'}
+
+    return Response("400-BAD REQUEST - ID não localizado",status = 400)
 
 
 app.run(debug=True)
