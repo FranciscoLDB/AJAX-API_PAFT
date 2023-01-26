@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request, render_template
 app = Flask(__name__)
 
-contacts = [{'id': 1, 'name': 'John Doe',  'phone': '555-555-5555'}]
+contacts = [{'id': 1, 'name': 'John Doe',  'phone': '555-555-5555'},
+            {'id': 2, 'name': 'Alice Silva',  'phone': '222-225-2222'} ]
 
 @app.route('/contact.html')
 def contact():

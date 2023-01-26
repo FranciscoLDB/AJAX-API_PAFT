@@ -7,38 +7,38 @@
     <title>crudTodo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous" defer></script>
-    <script></script>
+    
 </head>
 <body>
     <h1 class="text-center">crudTodo</h1>
     <section class="container mt-5">
         <div class="row">
-            <button class="col-6 btn btn-secondary" onclick="loadContatos()">Carregar todos contatos</button>
-            <div class="col-3">
+            <button class="col-4 btn btn-secondary" onclick="loadContacts()">Carregar todos contatos</button>
+            <div class="col-4">
                 <div class="input-group">
                     <input type="number" id="input_get_id" class="col-2 form-control" placeholder="ID">
-                    <button class="col-9 btn btn-secondary">Buscar contato</button>
+                    <button class="col-9 btn btn-secondary" onclick="loadContact()">Buscar contato</button>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <input type="number" id="input_delete_id" class="col-2 form-control" placeholder="ID">
-                    <button class="col-9 btn btn-secondary">Excluir contato</button>
+                    <button class="col-9 btn btn-secondary" onclick="deleteContact()">Excluir contato</button>
                 </div>
             </div>
         </div>
         <div class="row mt-4">
             <div class="col-6">
                 <input type="text" id="input_post_name" class="col-6 form-control" placeholder="Name">
-                <input type="number" id="input_post_phone" class="col-6 form-control mt-2" placeholder="Phone">
-                <button class="col-12 mt-2 btn btn-secondary">Criar contato</button>
+                <input type="tel" id="input_post_phone" class="col-6 form-control mt-2" placeholder="Phone">
+                <button class="col-12 mt-2 btn btn-secondary" onclick="postContact()">Criar contato</button>
             </div>
             <div class="col-6">
                 <input type="text" id="input_put_name" class="col form-control" placeholder="Name">
-                <input type="number" id="input_put_phone" class="col form-control mt-2" placeholder="Phone">
+                <input type="tel" id="input_put_phone" class="col form-control mt-2" placeholder="Phone">
                 <div class="input-group mb-3 mt-2">
-                    <input type="number" class="form-control col-1" id="input_post_id" placeholder="ID" aria-label="ID" aria-describedby="button-addon2">
-                    <button class="btn btn-secondary col-10" type="button" id="button-addon2">Atualizar contato</button>
+                    <input type="number" class="form-control col-1" id="input_put_id" placeholder="ID" aria-label="ID" aria-describedby="button-addon2">
+                    <button class="btn btn-secondary col-10" onclick="updateContact()">Atualizar contato</button>
                 </div>
             </div>
         </div>
@@ -53,18 +53,105 @@
                 </tr>
             </thead>
             <tbody class="table__tbody">
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>5555-5555</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>3334-5555</td>
-                </tr>
             </tbody>
         </table>
     </section>
 </body>
+<script>
+    function loadContacts(){
+        let tBody = document.querySelector('.table__tbody');
+        tBody.innerHTML = "";
+        fetch('http://127.0.0.1:5000/contacts', {
+            method: "GET"
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                data.contacts.forEach(contact => {
+                    let item = document.createElement('tr');
+                    item.innerHTML = 
+                        `<th>${contact.id}</th>
+                        <td>${contact.name}</td>
+                        <td>${contact.phone}</td>`;
+                    tBody.appendChild(item);
+                });
+            });
+    }
+    loadContacts();
+    function loadContact(){
+        let id = document.querySelector('#input_get_id');
+        let tBody = document.querySelector('.table__tbody');
+        tBody.innerHTML = "";
+        fetch(`http://127.0.0.1:5000/contacts/${id.value}`, {
+            method: "GET"
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let item = document.createElement('tr');
+                item.innerHTML = 
+                    `<th>${data.contact.id}</th>
+                    <td>${data.contact.name}</td>
+                    <td>${data.contact.phone}</td>`;
+                tBody.appendChild(item);
+                console.log(data);
+            });
+    }
+    function deleteContact(){
+        let id = document.querySelector('#input_delete_id');
+        let tBody = document.querySelector('.table__tbody');
+        tBody.innerHTML = "";
+        fetch(`http://127.0.0.1:5000/contacts/${id.value}`, {
+            method: "DELETE"
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.message);
+                loadContacts();
+            });
+    }
+    function postContact(){
+        let inputName = document.getElementById('input_post_name');
+        let inputPhone = document.getElementById('input_post_phone');
+        let inputData = {
+            "name": inputName.value,
+            "phone": inputPhone.value
+        };
+        fetch(`http://127.0.0.1:5000/contacts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(inputData)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let tBody = document.querySelector('.table__tbody');
+                let item = document.createElement('tr');
+                item.innerHTML = 
+                    `<th>${data.contact.id}</th>
+                    <td>${data.contact.name}</td>
+                    <td>${data.contact.phone}</td>`;
+                tBody.appendChild(item);
+        });
+    }
+    function updateContact(){
+        let inputId = document.getElementById('input_put_id');
+        let inputName = document.getElementById('input_put_name');
+        let inputPhone = document.getElementById('input_put_phone');
+        let inputData = {
+            "name": inputName.value,
+            "phone": inputPhone.value
+        };
+        fetch(`http://127.0.0.1:5000/contacts/${inputId.value}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(inputData)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                loadContacts();
+        });
+    }
+</script>
 </html>
