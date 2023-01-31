@@ -5,6 +5,7 @@ db = SQLAlchemy()
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 class User(db.Model):
@@ -12,8 +13,7 @@ class User(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     phone = db.Column(db.String, unique=True, nullable=False)
 
-with app.app_context():
-    db.create_all()
+
 
 contactsDB = db.Table(
     "contacts",
@@ -99,6 +99,7 @@ def delete_contact(id):
             return jsonify({'message': 'contact deleted'}),200
     return jsonify({'message':'contact not found'}), 404
     
-
+with app.app_context():
+    db.create_all()
 
 app.run(debug=True)
