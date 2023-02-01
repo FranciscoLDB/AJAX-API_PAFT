@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Contact</title>
+</head>
+<body>
+    <h1>Contact CRUD</h1>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone"><br>
+    <button type="button" onclick="createContact()">Create Contact</button>
+    <table id="contacts-table">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </thead>
+        <tbody id="contacts-table-body">
+
+        </tbody>
+    </table>
+    <!--<script src="./static/app.js">
+    -->
+    <script src="{{url_for('static',filename='app.js')}}">
+    </script>
+</body>
+</html>
