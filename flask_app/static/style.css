@@ -1,7 +1,0 @@
-.btn_upload:hover, .btn_delete:hover{
-    cursor: pointer;
-}
-.btn_delete{
-    margin-left: 10px;
-    color: #dc3545;
-}
