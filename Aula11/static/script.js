@@ -4,8 +4,9 @@ function loadContacts(){
     fetch('http://127.0.0.1:5000/contacts', {
         method: "GET"
     })
-        .then((response) => response.json())
+        .then((response) => {console.log(response); response.json()})
         .then((data) => {
+            console.log(data);/*
             data.contacts.forEach(contact => {
                 let item = document.createElement('tr');
                 let id = contact.id;
@@ -20,7 +21,7 @@ function loadContacts(){
                 btnDelete.addEventListener('click', () => {
                     deleteContact(id);
                 });
-            });
+            });*/
         });
 }
 loadContacts();
@@ -72,6 +73,7 @@ function postContact(){
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log(data);
             loadContacts();
     });
 }

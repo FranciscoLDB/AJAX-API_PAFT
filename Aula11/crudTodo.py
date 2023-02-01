@@ -10,8 +10,8 @@ db.init_app(app)
 
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    phone = db.Column(db.String(20))
+    name = db.Column(db.String(40), nullable=True)
+    phone = db.Column(db.String(40))
 
     def __init__(self, name, phone):
         self.name = name
@@ -67,6 +67,7 @@ def add_contact():
     )
     db.session.add(contact)
     db.session.commit()
+    print(contact.id)
 
     return jsonify({'contact': c}), 201
 
