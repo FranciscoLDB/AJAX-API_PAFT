@@ -11,10 +11,10 @@ def date():
 # GET request to retrieve all contacts
 @app.route('/contacts', methods=['GET'])
 def get_contacts():
-    arq = open('contacts.json')
-    data = json.load(arq)
-    contacts = data['contacts']
-    arq.close()
+    #arq = open('contacts.json')
+    #data = json.load(arq)
+    #contactsJson = data['contacts']
+    #arq.close()
     return jsonify({"contacts": contacts}), 200
 
 # GET request to retrieve one contacts
@@ -36,22 +36,21 @@ def write_json(new_data, filename='contacts.json'):
 # POST request to add a new contact with data of the new contact on a json file
 @app.route('/contacts', methods=['POST'])
 def add_contact():
-    #id is created here 
     if request.is_json:
-        return jsonify({'message': 'body is not a json'}), 415
+        data = request.get_json()
+        if not all(key in data for key in('name', 'phone')):
+            return jsonify({'message': 'bad request'}), 400
 
-    data = request.get_json()
-    if not all(key in data for key in('name', 'phone')):
-        return jsonify({'message': 'bad request'}), 400
-
-    contactNew = {
-        'id': contacts[-1]['id'] + 1,
-        'name': data['name'],
-        'phone': data['phone']
-    }
-    write_json(contactNew)
-    contacts.append(contactNew)
-    return jsonify({'contact': contactNew}), 201
+        contactNew = {
+            'id': contacts[-1]['id'] + 1,
+            'name': data['name'],
+            'phone': data['phone']
+        }
+        #write_json(contactNew)
+        contacts.append(contactNew)
+        return jsonify({'contact': contactNew}), 201
+        
+    return jsonify({'message': 'body is not a json'}), 415
 
 def upload_json(index, data):
     filename = 'contacts.json'
@@ -79,7 +78,7 @@ def update_contact(id):
                     contact['phone'] = request.json['phone']
                     data['phone'] = request.json['phone']
 
-                upload_json(cont, data)
+                #upload_json(cont, data)
 
                 return {'contact': contact}
 
