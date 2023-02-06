@@ -1,17 +1,34 @@
 let inputText = document.getElementById("usuario_input");
-inputText.addEventListener('keyup', load);
+//inputText.addEventListener('keyup', load);
 
-function load(){    
+const instance = axios.create({
+    baseURL: 'https://api.github.com/',
+    timeout: 1000
+});
+
+function load(){
     let nomeUsuario = inputText.value;
+    displayLoader();
+    instance.get(`users/${nomeUsuario}`)
+    .then(function (response) {
+        document.getElementById("usuario_git").innerHTML = response.data.login;
+        document.getElementById("foto_git").setAttribute("src", response.data.avatar_url);
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+    .then(function () {
+        hideLoader();
+    });
+}
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            var objetoResposta = JSON.parse(this.response);
-            document.getElementById("usuario_git").innerHTML = objetoResposta.login;
-            document.getElementById("foto_git").setAttribute("src", objetoResposta.avatar_url);
-        }
-    }
-    xhttp.open("GET", `https://api.github.com/users/${nomeUsuario}`);
-    xhttp.send();
+const loader = document.getElementById('loader');
+function displayLoader(){
+    loader.classList.add("display");
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 2900);
+}
+function hideLoader(){
+    loader.classList.remove("display");
 }
